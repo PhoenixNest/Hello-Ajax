@@ -1,0 +1,54 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax Timeout</title>
+  <style>
+    #result {
+      width: 200px;
+      height: 200px;
+      border: solid 1px pink;
+    }
+  </style>
+</head>
+
+<body>
+  <button>点击发送请求</button>
+  <div id="result"></div>
+
+  <script>
+    const btn = document.getElementsByTagName("button")[0];
+    const result = document.querySelector("#result");
+
+    btn.addEventListener("click", function () {
+      console.log("btn Click");
+
+      const xhr = new XMLHttpRequest();
+      xhr.timeout = 2000;
+
+      // 超时回调
+      xhr.ontimeout = function () {
+        alert("超时请重试");
+      }
+
+      // 网络异常回调
+      xhr.onerror = function () {
+        alert("网络异常");
+      }
+
+      // 解决IE缓存问题：修改链接地址后的参数
+      xhr.open("GET", "http://127.0.0.1:8000/delay");
+      xhr.send();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            result.innerHTML = xhr.response;
+          }
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

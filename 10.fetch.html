@@ -1,0 +1,33 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax - Fetch</title>
+</head>
+
+<body>
+  <button>点击发送请求</button>
+  <script>
+    const btn = document.querySelector("button");
+    btn.onclick = function () {
+      fetch(
+        "http://127.0.0.1:8000/fetch-server?id=10",
+        {
+          method: "POST",
+          headers: {
+            name: "Fetch Test",
+          },
+          body: "username=admin&password=admin",
+        }
+      ).then(value => {
+        // return value.text();
+        return value.json();
+      }).then(value => {
+        console.log(value);
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax Axios</title>
+  <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
+</head>
+
+<body>
+  <button>GET</button>
+  <button>POST</button>
+  <button>通用方法发送Ajax</button>
+  <script>
+    //　配置baseURL
+    axios.defaults.baseURL = "http://127.0.0.1:8000"
+
+    const btns = document.querySelectorAll("button");
+
+    // GET
+    btns[0].onclick = function () {
+      axios.get(
+        "/axios-server",
+        {
+          params: {
+            id: 100,
+            num: 7,
+          },
+
+          // 请求头参数
+          headers: {
+            name: "Axios - Test",
+            number: 10,
+          }
+        }
+      ).then((value => {
+        console.log(value);
+      }));
+    };
+
+    // POST
+    btns[1].onclick = function () {
+      axios.post(
+        "/axios-server",
+        {
+          username: "admin",
+          password: "admin",
+        },
+        {
+          params: {
+            id: 100,
+            num: 7,
+          },
+
+          // 请求头参数
+          headers: {
+            height: 180,
+            weight: 180,
+          },
+        }
+      ).then((value => {
+        console.log(value);
+      }));
+    };
+
+    // Ajax通用方法
+    btns[2].onclick = function () {
+      axios({
+        method: "POST",
+        url: "/axios-server",
+        params: {
+          id: 100,
+          num: 120,
+        },
+        headers: {
+          a: 100,
+          b: 120,
+        },
+        data: {
+          username: "admin",
+          password: "admin",
+        }
+      }).then((value) => {
+        console.log(value);
+      })
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax Repeat</title>
+</head>
+
+<body>
+  <button>点击发送请求</button>
+  <script>
+    let xhr = null;
+    
+    // 节流阀，标识请求是否正在发送或已完成
+    let isSending = false;
+    const btns = document.querySelectorAll("button");
+
+    // 发送请求
+    btns[0].onclick = function () {
+      // 如果正在发送，则取消该请求，创建一个新的请求
+      if (isSending) {
+        xhr.abort();
+      }
+
+      xhr = new XMLHttpRequest();
+      isSending = true;
+
+      xhr.open("GET", "http://127.0.0.1:8000/delay");
+      xhr.send();
+      xhr.onreadystatechange = function () {
+
+        if (xhr.readyState == 4) {
+          // 修改表示变量
+          isSending = false;
+        }
+      }
+    };
+
+  </script>
+</body>
+
+</html>
